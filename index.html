@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Passagem Zero — Crédito para o transporte público</title>
+  <meta name="description" content="Crédito mensal de transporte para pessoas desempregadas cadastradas no Sine e pessoas com consulta agendada pelo SUS." />
+  <meta property="og:title" content="Passagem Zero — A passagem não deveria ser um obstáculo" />
+  <meta property="og:description" content="Mais apoio para buscar emprego. Mais tranquilidade para cuidar da saúde." />
+  <meta property="og:type" content="website" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Raleway:wght@400;600;700;800;900&display=swap" />
+  <style>
+    :root {
+      --verde: #05893E;
+      --amarelo: #FAD100;
+      --azul: #0E4EB1;
+      --foreground: #192230;
+      --muted-fg: #62748E;
+      --secondary: #E9F3FF;
+      --muted: #F1F5F9;
+      --border: #E2E8F0;
+      --white: #FFFFFF;
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: "Raleway", system-ui, sans-serif;
+      color: var(--foreground);
+      background: var(--white);
+      line-height: 1.6;
+    }
+    .container { max-width: 1152px; margin: 0 auto; padding-left: 20px; padding-right: 20px; }
+    .container-narrow { max-width: 768px; margin: 0 auto; padding-left: 20px; padding-right: 20px; }
+    .container-mid { max-width: 896px; margin: 0 auto; padding-left: 20px; padding-right: 20px; }
+
+    /* Flag stripe */
+    .flag { display: flex; height: 6px; width: 100%; }
+    .flag span { flex: 1; }
+    .flag .g { background: var(--verde); }
+    .flag .y { background: var(--amarelo); }
+    .flag .b { background: var(--azul); }
+
+    /* Header */
+    header { border-bottom: 1px solid var(--border); background: var(--white); }
+    header .container { display: flex; align-items: center; justify-content: space-between; padding-top: 16px; padding-bottom: 16px; }
+    .brand { display: flex; align-items: center; gap: 8px; }
+    .brand-icon {
+      width: 40px; height: 40px; border-radius: 9999px;
+      background: var(--verde); color: var(--white);
+      display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+    }
+    .brand-name { font-size: 20px; font-weight: 900; }
+    .brand-name em { font-style: normal; color: var(--verde); }
+    .nav-link { display: none; font-size: 14px; font-weight: 700; color: var(--azul); text-decoration: none; }
+    .nav-link:hover { text-decoration: underline; text-underline-offset: 4px; }
+    @media (min-width: 640px) { .nav-link { display: block; } }
+
+    /* Buttons */
+    .btn {
+      display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+      width: 100%; min-height: 56px; padding: 12px 24px;
+      border-radius: 9999px; text-align: center;
+      font-size: 18px; font-weight: 800; text-transform: uppercase;
+      letter-spacing: 0.05em; line-height: 1.35; text-decoration: none;
+      box-shadow: 0 4px 6px -1px rgba(0,0,0,.1), 0 2px 4px -2px rgba(0,0,0,.1);
+      transition: filter .15s ease;
+    }
+    .btn:hover { filter: brightness(0.95); }
+    .btn-yellow { background: var(--amarelo); color: var(--foreground); }
+    @media (min-width: 640px) { .btn { width: auto; padding: 12px 32px; } }
+
+    /* Hero */
+    .hero { background: var(--azul); color: var(--white); }
+    .hero .container { padding-top: 56px; padding-bottom: 56px; display: grid; gap: 40px; }
+    .pill {
+      display: inline-block; margin-bottom: 16px; padding: 4px 16px;
+      border-radius: 9999px; background: var(--amarelo); color: var(--foreground);
+      font-size: 14px; font-weight: 800; text-transform: uppercase;
+    }
+    .hero h1 { font-size: 36px; font-weight: 900; line-height: 1.2; }
+    .hero p.lead { margin-top: 24px; font-size: 18px; line-height: 1.65; opacity: .95; }
+    .hero .btn-wrap { margin-top: 32px; }
+    .hero-cards { display: grid; gap: 16px; align-content: center; }
+    .hero-card {
+      display: flex; align-items: center; gap: 16px;
+      background: var(--white); color: var(--foreground);
+      border-radius: 16px; padding: 20px;
+      box-shadow: 0 10px 15px -3px rgba(0,0,0,.1), 0 4px 6px -4px rgba(0,0,0,.1);
+    }
+    .hero-card p { font-size: 18px; font-weight: 700; line-height: 1.4; }
+    .hero-card svg { flex-shrink: 0; }
+    @media (min-width: 768px) {
+      .hero .container { grid-template-columns: 1.3fr 1fr; padding-top: 80px; padding-bottom: 80px; }
+      .hero h1 { font-size: 60px; }
+      .hero p.lead { font-size: 20px; }
+    }
+
+    /* Section headings */
+    h2.section-title { font-size: 30px; font-weight: 900; line-height: 1.25; }
+    h2.section-title.center { text-align: center; margin-bottom: 40px; }
+    @media (min-width: 768px) { h2.section-title { font-size: 36px; } }
+
+    /* Story */
+    .story { padding-top: 64px; padding-bottom: 64px; font-size: 18px; line-height: 1.65; }
+    .story h2 { margin-bottom: 24px; }
+    .story p + p { margin-top: 16px; }
+    .story .highlight { font-size: 20px; font-weight: 700; color: var(--azul); }
+    .story .quote-line {
+      margin-top: 24px; padding-left: 16px;
+      border-left: 4px solid var(--amarelo);
+      font-size: 20px; font-weight: 800;
+    }
+
+    /* Who */
+    .who { background: var(--secondary); padding-top: 64px; padding-bottom: 64px; }
+    .who-grid { display: grid; gap: 24px; }
+    @media (min-width: 768px) { .who-grid { grid-template-columns: 1fr 1fr; } }
+    .who-card {
+      background: var(--white); border-radius: 16px; padding: 32px;
+      border-top: 8px solid var(--verde);
+      box-shadow: 0 1px 3px rgba(0,0,0,.1);
+    }
+    .who-card.blue { border-top-color: var(--azul); }
+    .who-card h3 { font-size: 24px; font-weight: 900; margin-top: 16px; }
+    .who-card p { margin-top: 12px; font-size: 18px; }
+    .who-foot { margin-top: 32px; text-align: center; font-size: 18px; font-weight: 600; }
+
+    /* How */
+    .how { padding-top: 64px; padding-bottom: 64px; scroll-margin-top: 16px; }
+    .steps { display: grid; gap: 40px; list-style: none; }
+    @media (min-width: 768px) { .steps { grid-template-columns: repeat(3, 1fr); gap: 24px; } }
+    .step {
+      position: relative; background: var(--white);
+      border: 2px solid var(--border); border-radius: 16px;
+      padding: 40px 28px 28px;
+    }
+    .step-num {
+      position: absolute; top: -24px; left: 28px;
+      width: 48px; height: 48px; border-radius: 9999px;
+      background: var(--amarelo); color: var(--foreground);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 24px; font-weight: 900;
+    }
+    .step h3 { font-size: 20px; font-weight: 900; margin-top: 12px; }
+    .step p { margin-top: 8px; font-size: 18px; }
+
+    /* Imagine */
+    .imagine { background: var(--verde); color: var(--white); padding-top: 64px; padding-bottom: 64px; }
+    .imagine ul { list-style: none; margin-top: 32px; display: grid; gap: 16px; font-size: 18px; }
+    .imagine li { display: flex; gap: 12px; align-items: flex-start; }
+    .imagine li svg { flex-shrink: 0; margin-top: 4px; color: var(--amarelo); }
+    .imagine p.body { margin-top: 32px; font-size: 18px; }
+    .imagine .big { margin-top: 24px; font-size: 24px; font-weight: 900; color: var(--amarelo); line-height: 1.35; }
+    @media (min-width: 768px) { .imagine ul, .imagine p.body { font-size: 20px; } }
+
+    /* Testimonials */
+    .testimonials { padding-top: 64px; padding-bottom: 64px; }
+    .t-grid { display: grid; gap: 24px; }
+    @media (min-width: 768px) { .t-grid { grid-template-columns: repeat(3, 1fr); } }
+    .t-card {
+      background: var(--secondary); border: 2px dashed var(--border);
+      border-radius: 16px; padding: 28px;
+    }
+    .t-card blockquote { font-size: 18px; font-style: italic; color: var(--muted-fg); margin-top: 12px; }
+    .t-card figcaption { margin-top: 20px; display: flex; align-items: center; gap: 12px; }
+    .t-avatar { width: 48px; height: 48px; border-radius: 9999px; background: var(--muted); flex-shrink: 0; }
+    .t-name { font-weight: 700; color: var(--muted-fg); }
+    .t-city { font-size: 14px; color: var(--muted-fg); }
+
+    /* CTA */
+    .cta { background: var(--azul); color: var(--white); padding-top: 64px; padding-bottom: 64px; text-align: center; scroll-margin-top: 16px; }
+    .cta p { margin-top: 20px; font-size: 18px; }
+    .cta .btn-wrap { margin-top: 32px; }
+
+    /* Footer */
+    footer { background: var(--foreground); color: var(--white); padding-top: 40px; padding-bottom: 40px; text-align: center; }
+    footer .brand-name { font-size: 24px; }
+    footer .brand-name em { color: var(--amarelo); }
+    footer p.tag { margin-top: 8px; }
+    footer .disclaimer {
+      margin: 24px auto 0; max-width: 672px;
+      display: flex; align-items: flex-start; justify-content: center; gap: 8px;
+      font-size: 14px; opacity: .8; text-align: center;
+    }
+    footer .disclaimer svg { flex-shrink: 0; margin-top: 2px; }
+  </style>
+</head>
+<body>
+  <div class="flag" aria-hidden="true"><span class="g"></span><span class="y"></span><span class="b"></span></div>
+
+  <header>
+    <div class="container">
+      <div class="brand">
+        <span class="brand-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 6v6"/><path d="M15 6v6"/><path d="M2 12h19.6"/><path d="M18 18h3s.5-1.7.8-2.8c.1-.4.2-.8.2-1.2 0-.4-.1-.8-.2-1.2l-1.4-5C20.1 6.8 19.1 6 18 6H4a2 2 0 0 0-2 2v10h3"/><circle cx="7" cy="18" r="2"/><path d="M9 18h5"/><circle cx="16" cy="18" r="2"/></svg>
+        </span>
+        <span class="brand-name">Passagem <em>Zero</em></span>
+      </div>
+      <a class="nav-link" href="#como-funciona">Como funciona</a>
+    </div>
+  </header>
+
+  <!-- Hero -->
+  <section class="hero">
+    <div class="container">
+      <div>
+        <p class="pill">Novo programa de transporte</p>
+        <h1>A passagem não deveria ser um obstáculo para quem precisa seguir em frente.</h1>
+        <p class="lead">Está procurando emprego ou precisa ir a uma consulta pelo SUS? O <strong>Passagem Zero</strong> oferece <strong>crédito mensal para transporte público</strong> a pessoas desempregadas cadastradas no Sine e pessoas com consultas agendadas pelo SUS, conforme os critérios de participação.</p>
+        <div class="btn-wrap">
+          <a class="btn btn-yellow" href="#como-funciona">Quero saber como funciona
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14"/><path d="m19 12-7 7-7-7"/></svg>
+          </a>
+        </div>
+      </div>
+      <div class="hero-cards">
+        <div class="hero-card">
+          <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#05893E" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 20V4a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/><rect width="20" height="14" x="2" y="6" rx="2"/></svg>
+          <p>Mais apoio para buscar emprego.</p>
+        </div>
+        <div class="hero-card">
+          <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#0E4EB1" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"/><path d="M3.22 12H9.5l.5-1 2 4.5 2-7 1.5 3.5h5.27"/></svg>
+          <p>Mais tranquilidade para cuidar da saúde.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Story -->
+  <section class="story">
+    <div class="container-narrow">
+      <h2 class="section-title">Uma passagem pode mudar muita coisa.</h2>
+      <p>Quem está desempregado sabe que conseguir trabalho exige esforço. É preciso procurar vagas, preparar o currículo, participar de entrevistas e continuar tentando, mesmo quando as coisas não saem como esperado.</p>
+      <p class="highlight">Mas como fazer tudo isso quando até o dinheiro do ônibus faz falta?</p>
+      <p>E quando chega o dia de uma consulta importante, o transporte também não deveria ser mais uma preocupação.</p>
+      <p>O Passagem Zero nasce com um propósito: ajudar a diminuir essa barreira e facilitar o acesso a oportunidades e serviços de saúde.</p>
+      <p class="quote-line">Porque todo mundo merece ter a chance de seguir em frente.</p>
+    </div>
+  </section>
+
+  <!-- Who -->
+  <section class="who">
+    <div class="container">
+      <h2 class="section-title center">Quem poderá ser beneficiado?</h2>
+      <div class="who-grid">
+        <div class="who-card">
+          <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="#05893E" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 20V4a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/><rect width="20" height="14" x="2" y="6" rx="2"/></svg>
+          <h3>Para quem está procurando emprego</h3>
+          <p>Pessoas desempregadas <strong>cadastradas no Sine</strong> que precisam se deslocar para buscar oportunidades de trabalho, conforme as regras do programa.</p>
+        </div>
+        <div class="who-card blue">
+          <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="#0E4EB1" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"/><path d="M3.22 12H9.5l.5-1 2 4.5 2-7 1.5 3.5h5.27"/></svg>
+          <h3>Para quem precisa cuidar da saúde</h3>
+          <p>Pessoas com <strong>consultas agendadas pelo SUS</strong> que precisam de apoio para chegar ao atendimento.</p>
+        </div>
+      </div>
+      <p class="who-foot">A proposta é simples: ajudar a tornar o transporte público mais acessível para quem mais precisa.</p>
+    </div>
+  </section>
+
+  <!-- How -->
+  <section class="how" id="como-funciona">
+    <div class="container">
+      <h2 class="section-title center">Como funciona o Passagem Zero?</h2>
+      <ol class="steps">
+        <li class="step">
+          <span class="step-num">1</span>
+          <svg xmlns="http://www.w3.org/2000/svg" width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="#0E4EB1" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="m9 12 2 2 4-4"/></svg>
+          <h3>Confira se você se encaixa nos critérios</h3>
+          <p>Verifique se você faz parte de um dos públicos atendidos pelo programa.</p>
+        </li>
+        <li class="step">
+          <span class="step-num">2</span>
+          <svg xmlns="http://www.w3.org/2000/svg" width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="#0E4EB1" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z"/><path d="M14 2v4a2 2 0 0 0 2 2h4"/><path d="M10 9H8"/><path d="M16 13H8"/><path d="M16 17H8"/></svg>
+          <h3>Consulte as orientações para participar</h3>
+          <p>Confira quais documentos serão necessários e como realizar o cadastro pelos canais oficiais.</p>
+        </li>
+        <li class="step">
+          <span class="step-num">3</span>
+          <svg xmlns="http://www.w3.org/2000/svg" width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="#0E4EB1" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="14" x="2" y="5" rx="2"/><line x1="2" x2="22" y1="10" y2="10"/></svg>
+          <h3>Receba as informações sobre o benefício</h3>
+          <p>Se aprovado, o crédito mensal de transporte será disponibilizado no cartão definido pelo programa, de acordo com as regras estabelecidas.</p>
+        </li>
+      </ol>
+    </div>
+  </section>
+
+  <!-- Imagine -->
+  <section class="imagine">
+    <div class="container-mid">
+      <h2 class="section-title">Imagine o que essa ajuda pode representar.</h2>
+      <ul>
+        <li>
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="m9 12 2 2 4-4"/></svg>
+          Uma entrevista de emprego que antes parecia distante.
+        </li>
+        <li>
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="m9 12 2 2 4-4"/></svg>
+          Uma consulta médica que você não precisa deixar de lado por falta de dinheiro para o ônibus.
+        </li>
+        <li>
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="m9 12 2 2 4-4"/></svg>
+          Um pouco mais de tranquilidade para organizar as contas no fim do mês.
+        </li>
+      </ul>
+      <p class="body">Pode parecer apenas uma passagem. Mas, para quem está passando por dificuldades, essa ajuda pode representar uma oportunidade importante.</p>
+      <p class="big">O caminho para uma vida melhor começa com a chance de chegar lá.</p>
+    </div>
+  </section>
+
+  <!-- Testimonials -->
+  <section class="testimonials">
+    <div class="container">
+      <h2 class="section-title center">Depoimentos</h2>
+      <div class="t-grid">
+        <figure class="t-card">
+          <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#FAD100" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 21c3 0 7-1 7-8V5c0-1.25-.756-2.017-2-2H4c-1.25 0-2 .75-2 1.972V11c0 1.25.75 2 2 2 1 0 1 0 1 1v1c0 1-1 2-2 2s-1 .008-1 1.031V20c0 1 0 1 1 1z"/><path d="M15 21c3 0 7-1 7-8V5c0-1.25-.757-2.017-2-2h-4c-1.25 0-2 .75-2 1.972V11c0 1.25.75 2 2 2h.75c0 2.25.25 4-2.75 4v3c0 1 0 1 1 1z"/></svg>
+          <blockquote>[Espaço para depoimento real 1]</blockquote>
+          <figcaption>
+            <span class="t-avatar" aria-hidden="true"></span>
+            <span>
+              <span class="t-name">[Nome]</span><br />
+              <span class="t-city">[Cidade / situação]</span>
+            </span>
+          </figcaption>
+        </figure>
+        <figure class="t-card">
+          <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#FAD100" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 21c3 0 7-1 7-8V5c0-1.25-.756-2.017-2-2H4c-1.25 0-2 .75-2 1.972V11c0 1.25.75 2 2 2 1 0 1 0 1 1v1c0 1-1 2-2 2s-1 .008-1 1.031V20c0 1 0 1 1 1z"/><path d="M15 21c3 0 7-1 7-8V5c0-1.25-.757-2.017-2-2h-4c-1.25 0-2 .75-2 1.972V11c0 1.25.75 2 2 2h.75c0 2.25.25 4-2.75 4v3c0 1 0 1 1 1z"/></svg>
+          <blockquote>[Espaço para depoimento real 2]</blockquote>
+          <figcaption>
+            <span class="t-avatar" aria-hidden="true"></span>
+            <span>
+              <span class="t-name">[Nome]</span><br />
+              <span class="t-city">[Cidade / situação]</span>
+            </span>
+          </figcaption>
+        </figure>
+        <figure class="t-card">
+          <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#FAD100" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 21c3 0 7-1 7-8V5c0-1.25-.756-2.017-2-2H4c-1.25 0-2 .75-2 1.972V11c0 1.25.75 2 2 2 1 0 1 0 1 1v1c0 1-1 2-2 2s-1 .008-1 1.031V20c0 1 0 1 1 1z"/><path d="M15 21c3 0 7-1 7-8V5c0-1.25-.757-2.017-2-2h-4c-1.25 0-2 .75-2 1.972V11c0 1.25.75 2 2 2h.75c0 2.25.25 4-2.75 4v3c0 1 0 1 1 1z"/></svg>
+          <blockquote>[Espaço para depoimento real 3]</blockquote>
+          <figcaption>
+            <span class="t-avatar" aria-hidden="true"></span>
+            <span>
+              <span class="t-name">[Nome]</span><br />
+              <span class="t-city">[Cidade / situação]</span>
+            </span>
+          </figcaption>
+        </figure>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="cta" id="informacoes">
+    <div class="container-narrow">
+      <h2 class="section-title">Você não precisa enfrentar tudo isso sem apoio.</h2>
+      <p>O Passagem Zero tem como objetivo facilitar o deslocamento de quem busca uma oportunidade de trabalho ou precisa de atendimento pelo SUS.</p>
+      <p>Fique por dentro das informações sobre o programa, os critérios de participação e as orientações para solicitar o benefício.</p>
+      <div class="btn-wrap">
+        <a class="btn btn-yellow" href="#informacoes">Quero receber informações</a>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="container">
+      <p class="brand-name">Passagem <em>Zero</em></p>
+      <p class="tag">Mais oportunidades para quem quer trabalhar. Mais apoio para quem precisa cuidar da saúde.</p>
+      <p class="disclaimer">
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/></svg>
+        Consulte as condições de participação, os critérios de elegibilidade e a disponibilidade do programa nos canais oficiais.
+      </p>
+    </div>
+  </footer>
+
+  <div class="flag" aria-hidden="true"><span class="g"></span><span class="y"></span><span class="b"></span></div>
+</body>
+</html>
